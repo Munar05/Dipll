@@ -1,0 +1,10 @@
+@tailwind base; @tailwind components; @tailwind utilities;
+body { @apply bg-ink text-slate-200 font-sans antialiased; background-image: radial-gradient(60rem 30rem at 80% -10%, rgba(139,92,246,.18), transparent), radial-gradient(40rem 25rem at -10% 10%, rgba(56,189,248,.12), transparent); background-attachment: fixed; }
+@layer components {
+  .card { @apply rounded-2xl border border-line bg-graphite/70 p-5 transition hover:border-violet/50 hover:shadow-[0_0_30px_-8px_rgba(139,92,246,.45)]; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold transition disabled:opacity-50; }
+  .btn-primary { @apply btn bg-gradient-to-r from-violet to-sky text-white hover:shadow-[0_0_24px_rgba(139,92,246,.6)]; }
+  .btn-ghost { @apply btn border border-line text-slate-200 hover:border-sky hover:text-white; }
+  .input { @apply w-full rounded-xl border border-line bg-ink/60 px-4 py-2.5 text-sm outline-none transition focus:border-violet focus:ring-2 focus:ring-violet/30; }
+  .tag { @apply rounded-full bg-violet/15 px-2.5 py-0.5 text-xs font-medium text-violet; }
+}

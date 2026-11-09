@@ -1,0 +1,70 @@
+generator client { provider = "prisma-client-js" }
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+model User {
+  id String @id @default(cuid())
+  name String
+  email String @unique
+  password String
+  createdAt DateTime @default(now())
+  profile Profile?
+  projects Project[]
+  memberships ProjectMember[]
+  conversations Conversation[]
+}
+model Profile {
+  id String @id @default(cuid())
+  userId String @unique
+  user User @relation(fields:[userId],references:[id])
+  bio String @default("")
+  avatar String @default("")
+  interests String[]
+  skills Skill[]
+}
+model Skill {
+  id String @id @default(cuid())
+  name String @unique
+  profiles Profile[]
+}
+model Project {
+  id String @id @default(cuid())
+  title String
+  description String
+  category String
+  status String @default("Idea")
+  technologies String[]
+  lookingFor String[]
+  teamNeeds String @default("")
+  isDemo Boolean @default(false)
+  ownerId String?
+  owner User? @relation(fields:[ownerId],references:[id])
+  members ProjectMember[]
+  createdAt DateTime @default(now())
+}
+model ProjectMember {
+  id String @id @default(cuid())
+  projectId String
+  userId String
+  role String @default("Member")
+  project Project @relation(fields:[projectId],references:[id])
+  user User @relation(fields:[userId],references:[id])
+  @@unique([projectId,userId])
+}
+model Conversation {
+  id String @id @default(cuid())
+  title String
+  userId String
+  user User @relation(fields:[userId],references:[id])
+  messages Message[]
+  createdAt DateTime @default(now())
+}
+model Message {
+  id String @id @default(cuid())
+  role String
+  content String
+  conversationId String
+  conversation Conversation @relation(fields:[conversationId],references:[id],onDelete:Cascade)
+  createdAt DateTime @default(now())
+}
